@@ -1,0 +1,39 @@
+class Solution
+{
+    public:
+        vector <int> search(string pattern, string text)
+        {
+            int m = pattern.length();
+            int n = text.length();
+            int p = 13;
+            int i = 0;
+            int hash_p = 0;
+            int hash_t = 0;
+            for(i ; i < m; i++){
+                hash_p += (pattern[i] - 'a') % p;
+                hash_t += (text[i] - 'a') % p;
+            }
+            int s,e;
+            vector<int> ans;
+            
+            i = 0;
+            while(i < n - m + 1){
+                if(i != 0){
+                    hash_t = (hash_t - ((text[i - 1] - 'a') % p)) + ((text[i + m - 1] - 'a') % p);
+                }
+                s = 0;
+                if(hash_p == hash_t){
+                e = i;
+                while(s < m){
+                    if(pattern[s] != text[e]) break;
+                    s++;
+                    e++;
+                }
+                if(s == m) ans.push_back(i + 1);
+            }
+                i++;
+            }
+            return ans;
+        }
+     
+};

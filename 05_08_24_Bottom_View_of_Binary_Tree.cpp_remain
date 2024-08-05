@@ -1,0 +1,24 @@
+class Solution {
+  public:
+    vector <int> bottomView(Node *root) {
+        vector<int> ans;
+        queue<pair<Node*,int>> q;
+        unordered_map<int,int> mm;
+        q.push({root,0});
+        int mn=0,mx=0;
+        while(!q.empty()){
+            auto a = q.front();
+            q.pop();
+            Node *temp = a.first;
+            mm[a.second]=temp->data;
+            mn=min(mn,a.second);
+            mx=max(mx,a.second);
+            if(temp->left)q.push({temp->left,a.second-1});
+            if(temp->right)q.push({temp->right,a.second+1});
+        }
+        for(int i=mn;i<=mx;i++){
+            ans.push_back(mm[i]);
+        }
+        return ans;
+    }
+};

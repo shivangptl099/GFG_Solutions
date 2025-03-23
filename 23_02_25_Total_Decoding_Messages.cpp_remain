@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    int solve(int idx, int n, string s, vector<int> &dp){
+        if(idx == n) return 1;
+        if(s[idx] == '0') return 0;
+        if(dp[idx] != -1) return dp[idx];
+        int ans = 0;
+        ans += solve(idx + 1, n, s, dp);
+        if(idx < n - 1){
+            int num =(s[idx] - '0') * 10 + (s[idx + 1] - '0');
+            if(num <= 26){
+                ans += solve(idx + 2, n, s, dp);
+            }
+        }
+        return dp[idx] = ans; 
+    }
+    int countWays(string &digits) {
+        int n = digits.length();
+        vector<int> dp(n, -1);
+        return solve(0, n, digits, dp);
+    }
+};
